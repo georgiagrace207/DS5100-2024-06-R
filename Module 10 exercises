@@ -1,0 +1,107 @@
+---
+title: "Module 10 exercises"
+output:
+  html_document: default
+  pdf_document: default
+date: "2024-07-03"
+---
+
+
+```{r}
+
+# 10.1
+
+fib <- numeric(10)
+fib[1] <- fib[2] <- 1
+
+for (i in 3:10) {
+  fib[i] <- fib [i-2] + fib [i-1]
+}
+
+
+# 10.2
+
+get_fib <- function(n=10)
+  fib <- numeric(n)
+  fib[1] <- fib[2] <- 1
+
+for (i in 3:10) {
+  fib[i] <- fib [i-2] + fib [i-1]
+}
+  
+```
+
+
+
+
+```{r}
+
+# 10.3
+
+
+my_val <- function(x){
+  if(0 <= x <= 1) {
+    return(1)
+  }
+  else {
+    return(0)
+  }
+}
+
+# 10.4
+
+my_val(0.4)
+my_val(0.8)
+my_val(1.2)
+my_val(1.6)
+my_val(2.0)
+```
+
+
+
+```{r}
+
+# 10.5
+
+letters[1:10]
+LETTERS[16:26]
+LETTERS[22:24]
+
+
+```
+
+
+```{r}
+# 10.6
+
+for (i in 1:100){
+  if (i %% 3 == 0) {
+    print(Fizz)
+  }
+  if (i %% 5 == 0) {
+    print(Buzz)
+  } 
+  if (i %% 3 == 0) and (i %% 5 == 0) {
+    print(FizzBuzz)
+  }
+  else {
+    print(i)
+  }
+}
+
+
+```
+
+
+
+
+```{r}
+
+# 10.7
+
+string <- ('my string')
+vector <- c(1, 2, 3)
+
+unique(string)
+unique(vector)
+```
