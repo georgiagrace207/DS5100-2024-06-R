@@ -17,7 +17,6 @@ class TestDie(unittest.TestCase):
 
 class TestGame(unittest.TestCase):
     def setUp(self):
-        # Setup code that runs before each test method
         self.dice = [Die([1, 2, 3, 4, 5, 6]), Die([1, 2, 3, 4, 5, 6])]
         self.game = Game(self.dice)
 
@@ -29,19 +28,17 @@ class TestGame(unittest.TestCase):
 
 class TestAnalyzer(unittest.TestCase):
     def setUp(self):
-        # Setup code that runs before each test method
         self.dice = [Die([1, 2, 3, 4, 5, 6]), Die([1, 2, 3, 4, 5, 6])]
         self.game = Game(self.dice)
-        self.game.play(5)  # Play the game a few times
+        self.game.play(5)  
         self.analyzer = Analyzer(self.game)
 
     def test_analyze_jackpot(self):
-        self.assertEqual(self.analyzer.jackpot(), 0)  # Assuming no jackpots in the test rolls
+        self.assertEqual(self.analyzer.jackpot(), 0) 
 
     def test_analyze_face_counts_per_roll(self):
         face_counts = self.analyzer.roll_face_counts()
-        self.assertEqual(face_counts.loc[0, 1], 1)  # Example: Check face count for face value 1 in the first roll
-
+        self.assertEqual(face_counts.loc[0, 1], 1) 
 
 if __name__ == '__main__':
     unittest.main()
