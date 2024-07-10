@@ -1,0 +1,179 @@
+---
+title: "Untitled"
+output: html_document
+date: "2024-07-09"
+---
+
+```{r}
+
+library(vctrs)
+library(tidyverse)
+
+head(mpg)
+
+mpg %>% ggplot()
+```
+
+```{r}
+
+mpg %>%
+ggplot(
+  mapping = aes(
+    x = cyl, 
+    y = hwy)
+  ) + 
+  geom_point(size=3
+)
+
+
+
+```
+```{r}
+
+mpg %>%
+ggplot(
+  mapping = aes(
+    x = drv, 
+    y = class)
+  ) + 
+  geom_point(size=3
+)
+
+
+
+
+
+
+
+
+```
+
+```{r}
+
+x <- seq(-6*pi, 6*pi, length.out = 100)
+data <- data.frame (x = x, y = sin(x)/x)
+ggplot(data = data, 
+       mapping =aes(x = x, y = y,
+                    geom_line())
+)
+
+
+
+```
+
+```{r}
+
+cars %>%
+ggplot(
+  mapping = aes(
+    x = speed, 
+    y = dist)
+  ) + 
+  geom_point(size=3
+)
+
+
+
+
+
+
+```
+
+```{r}
+
+cars %>%
+ggplot(
+  mapping = aes(
+    x = speed, 
+    y = dist, 
+    color = dist > 80)
+  ) + 
+  geom_point(size=3
+)
+
+
+
+
+```
+
+```{r}
+
+cars %>%
+  ggplot(
+    mapping = aes(x = speed, y = dist, color = dist > 80)
+    scale_color_manual(
+      values = 'red', 'cyan'
+    )
+  ) 
+
+
+
+
+
+
+
+
+```
+
+
+```{r}
+
+cars %>%
+  ggplot(aes(x = speed, y = dist)) +
+  geom_point(aes(color = dist > 80)) +
+    scale_color_manual(values = 'red', 'cyan')+ 
+  geom_smooth(method = 'lm')
+
+
+```
+```{r}
+
+cars %>%
+ggplot(aes(x = speed))+ 
+  geom_histogram(bins = 10)
+
+
+
+
+
+```
+
+```{r}
+
+mpg %>%
+ggplot() +
+  geom_point(aes(x = hwy, y = cty)) + 
+  facet_grid(drv ~ cyl)
+
+
+
+
+```
+
+```{r}
+
+ggplot(iris, aes(Species)) + geom_density(aes(fill = factor(Species)),
+size=2) + labs(title="Density plot") 
+
+iris %>%
+  ggplot(aes(x = Sepal.Length, y = Sepal.Width, color = Species, shape = Species)) +
+  geom_point() +
+  geom_density2d() +
+  ggtitle('IRIS') +
+  theme_light()
+
+
+
+
+
+
+
+```
+
+
+
+
+
+
+
+
