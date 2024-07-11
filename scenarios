@@ -1,0 +1,220 @@
+# SCENARIO 1:
+
+
+# Task 1
+
+
+faces_fair = ['H', 'T']
+coin_fair = Die(faces_fair)
+
+
+faces_unfair = ['H', 'T']
+weights_unfair = [1, 5]  
+coin_unfair = Die(faces_unfair)
+coin_unfair.alter_weight('T', 5)
+
+
+# Task 2
+
+
+game_fair = Game([coin_fair, coin_fair])
+game_fair.play(num_rolls=1000)
+
+
+# Task 3
+coin_unfair_copy = Die(faces_unfair)
+coin_unfair_copy.alter_weight('T', 5)
+
+
+game_unfair = Game([coin_unfair, coin_unfair_copy, coin_fair])
+game_unfair.play(num_rolls=1000)
+
+
+# Task 4
+analyzer_fair = Analyzer(game_fair)
+analyzer_unfair = Analyzer(game_unfair)
+
+
+jackpot_count_fair = analyzer_fair.jackpot()
+jackpot_count_unfair = analyzer_unfair.jackpot()
+
+
+print("Raw Frequency, Fair Game:", jackpot_count_fair)
+print("Raw Frequency, Unfair Game:", jackpot_count_unfair)
+
+
+# Task 5
+
+
+total_rolls_fair = 1000
+total_rolls_unfair = 1000
+
+
+relative_frequency_fair = jackpot_count_fair / total_rolls_fair
+relative_frequency_unfair = jackpot_count_unfair / total_rolls_unfair
+
+
+print("Relative Frequency, Fair Game:", relative_frequency_fair)
+print("Relative Frequency, Unfair Game:", relative_frequency_unfair)
+
+
+# Task 6
+
+
+import matplotlib.pyplot as plt
+
+
+games = ['Fair', 'Unfair']
+frequencies = [relative_frequency_fair, relative_frequency_unfair]
+plt.figure(figsize=(8, 6))
+plt.bar(games, frequencies, color=['green', 'pink'])
+plt.xlabel('Games')
+plt.ylabel('Relative Frequency')
+plt.title('Relative Frequency - Fair vs Unfair Game')
+plt.ylim(0, 1)
+plt.grid(True)
+plt.show()
+
+# Scenario 2
+
+
+dice1 = Die(np.arange(1, 7))
+dice2 = Die(np.arange(1, 7))
+dice3 = Die(np.arange(1, 7))
+
+
+dice1.alter_weight(6, 5)
+
+
+dice2.alter_weight(1, 5)
+
+
+game_5_fair_dice = Game([Die(np.arange(1, 7)) for i in range(5)])
+game_5_fair_dice.play(num_rolls=10000)
+
+
+game_2_unfair_dice = Game([dice1, dice2, Die(np.arange(1, 7)), Die(np.arange(1, 7)), Die(np.arange(1, 7))])
+game_2_unfair_dice.play(num_rolls=10000)
+
+
+analyzer_5_fair_dice = Analyzer(game_5_fair_dice)
+analyzer_2_unfair_3_fair_dice = Analyzer(game_2_unfair_dice)
+
+
+jackpot_count_5_fair_dice = analyzer_5_fair_dice.jackpot()
+jackpot_count_2_unfair_3_fair_dice = analyzer_2_unfair_3_fair_dice.jackpot()
+
+
+total_rolls_5_fair_dice = 10000
+total_rolls_2_unfair_3_fair_dice = 10000
+
+
+relative_frequency_5_fair_dice = jackpot_count_5_fair_dice / total_rolls_5_fair_dice
+relative_frequency_2_unfair_3_fair_dice = jackpot_count_2_unfair_3_fair_dice / total_rolls_2_unfair_3_fair_dice
+
+
+print("Relative Frequency, 5 Fair Dice:", relative_frequency_5_fair_dice)
+print("Relative Frequency; 2 Unfair, 3 Fair Dice:", relative_frequency_2_unfair_3_fair_dice)
+
+
+games = ['5 Fair Dice', '2 Unfair, 3 Fair Dice']
+frequencies = [relative_frequency_5_fair_dice, relative_frequency_2_unfair_3_fair_dice]
+
+
+plt.figure(figsize=(8, 6))
+plt.bar(games, frequencies, color=['blue', 'yellow'])
+plt.xlabel('Games')
+plt.ylabel('Relative Frequency')
+plt.title('Relative Frequency of Jackpots - 5 Fair vs 2 Unfair, 3 Fair Dice')
+plt.ylim(0, 0.1)
+plt.grid(True)
+plt.show()
+
+
+# Scenario 3
+
+import pandas as pd
+import numpy as np
+from montecarlo import Die, Game, Analyzer
+
+
+
+
+def create_die_from_file(filename):
+   with open(filename, 'r') as file:
+       lines = file.readlines()
+
+
+   faces = []
+   weights = []
+   for line in lines:
+       parts = line.strip().split(',')
+       if len(parts) == 2:
+           face, weight = parts
+           faces.append(face.strip())
+           weights.append(float(weight.strip()))
+       else:
+           print(f"Ignoring line: {line}")
+
+
+   return Die(faces, weights)
+
+
+
+
+
+
+def read_vocabulary(filename):
+   vocabulary = set()
+   with open(filename, 'r') as file:
+       for line in file:
+           word = line.strip()
+           vocabulary.add(word)
+   return vocabulary
+
+
+
+
+def main():
+   # Task 1
+   letters_die = create_die_from_file('english_letters.txt')
+
+
+   # Task 2
+   game_4_dice = Game([letters_die] * 4)
+   game_4_dice.play(1000)
+
+
+   # Task 3
+   analyzer = Analyzer(game_4_dice)
+   permutations_count = analyzer.permutation_count()
+   vocabulary = read_vocabulary('scrabble_words.txt')
+   english_words_count = len(set(permutations_count.index).intersection(vocabulary))
+   non_english_words_count = len(permutations_count) - english_words_count
+   print(f"English words count (4 Dice): {english_words_count}")
+   print(f"Non-English words count (4 Dice): {non_english_words_count}")
+
+
+   # Task 4
+   game_5_dice = Game([letters_die] * 5)
+   game_5_dice.play(1000)
+   analyzer_5_dice = Analyzer(game_5_dice)
+   permutations_count_5_dice = analyzer_5_dice.permutation_count()
+   english_words_count_5_dice = len(set(permutations_count_5_dice.index).intersection(vocabulary))
+   non_english_words_count_5_dice = len(permutations_count_5_dice) - english_words_count_5_dice
+   print(f"English words count (5 Dice): {english_words_count_5_dice}")
+   print(f"Non-English words count (5 Dice): {non_english_words_count_5_dice}")
+
+
+   if english_words_count > english_words_count_5_dice:
+       print("More found with 4 Dice")
+   elif english_words_count < english_words_count_5_dice:
+       print("More found with 5 Dice")
+   else:
+       print("Equal number found with both")
+
+
+
+
+if __name__ == "__main__":
+   main()
