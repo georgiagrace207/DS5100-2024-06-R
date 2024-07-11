@@ -1,0 +1,28 @@
+**note: I’m completing this on my own to the best of my ability as I was not able to attend class today**
+
+
+
+Project Name: X-ray Monitor
+
+Team: Georgia Davidson (developer and user)
+
+Scope: elicit radiologists’ X-ray readings and return an agent to help them read and detect bone fractures more accurately and effectively
+
+User stories: 
+-As the developer, I want to diagnose which fractures scanned by X-rays are likely to appear ambiguous or even go undetected, in order to determine which will need to be fixed for better, more 
+accurate detecting.  
+-As the user, I want to know which X-rays are having issues and focus on making the data from them as accurate as possible, classifying patients as having or not having a fracture with a 90% accuracy 
+or greater. 
+
+Requirements:
+
+-preprocess data with Keras in Python
+-create neural networks for classification and train models on training data subset
+-test neural network models on test data subset and compare their performance metrics
+
+
+Priorities:
+
+-must be able to classify patients as having a bone fracture or not with 90% accuracy or greater given an X-ray image of their injury
+-must be able to filter fractures by type (hip, hand, etc)
+-must optimize models with KerasTuner if accuracy is less than 90%
